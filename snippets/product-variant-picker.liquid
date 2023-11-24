@@ -1,13 +1,13 @@
 {% comment %} 
-                                                                                                                                                                          Renders product variant-picker
-                                                                                                                                                                         
-                                                                                                                                                                          Accepts: 
-                                                                                                                                                                          - product: {Object} product object. 
-                                                                                                                                                                          - block: {Object} passing the block information. 
-                                                                                                                                                                          - product_form_id: {String} Id of the product form to which the variant picker is associated. 
-                                                                                                                                                                          - update_url: {Boolean} whether or not to update url when changing variants. If false, the url isn't updated. Default: true (optional).
-                                                                                                                                                                          Usage:
-                                                                                                                                                                          {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %} 
+                                                                                                                                                                  Renders product variant-picker
+                                                                                                                                                                 
+                                                                                                                                                                  Accepts: 
+                                                                                                                                                                  - product: {Object} product object. 
+                                                                                                                                                                  - block: {Object} passing the block information. 
+                                                                                                                                                                  - product_form_id: {String} Id of the product form to which the variant picker is associated. 
+                                                                                                                                                                  - update_url: {Boolean} whether or not to update url when changing variants. If false, the url isn't updated. Default: true (optional).
+                                                                                                                                                                  Usage:
+                                                                                                                                                                  {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %} 
 {% endcomment %}
 {%- unless product.has_only_default_variant -%}
   {%- if block.settings.picker_type == 'button' -%}
@@ -34,12 +34,12 @@
                 form="{{ product_form_id }}"
                 {% if option.selected_value == value %}
                 checked{% endif %}>
-              {% assign variant_image_url = product.variants[forloop.index0].metafields.variant.image_url %}
-              {% if option.name == 'Color' %}
+               
+              {% if product.variants[forloop.index0].image != blank and option.name == 'Color' %}
                 <label
                   class="swColor"
                   for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-                  style="background-image: url({{ variant_image_url }});">
+                  style="background-image: url({{ product.variants[forloop.index0].image | img_url : ''  }});">
 
                   <span class="visually-hidden">Variant sold out or unavailable</span>
                 </label>
@@ -68,6 +68,7 @@
                 </option>
               {%- endfor -%}
             </select>
+
 
           </fieldset>
         {% endif -%}
@@ -172,5 +173,3 @@
     background-size: cover;
   }
 </style>
-
-<script></script>
